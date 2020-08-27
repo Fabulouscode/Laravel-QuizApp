@@ -31,7 +31,21 @@
                         <td>{{$quiz->minutes}}</td>
                         <td>{{$quiz->description}}</td>
                         <td><a href="{{route('quiz.edit',[$quiz->id])}}" class="btn btn-primary">Edit</a></td>
-                        <td><a href="{{route('quiz.destroy',[$quiz->id])}}" class="btn btn-danger">Delete</a></td>
+                        <td>
+                        <form id="delete_form{{$quiz->id}}" method="POST" action="{{route('quiz.destroy', [$quiz->id])}}">@csrf
+                        {{method_field('DELETE')}}
+
+                        </form>
+                    <a href="#" onclick="if(confirm('Do you want to delete?')){
+                        event.preventDefault();
+                    document.getElementById('delete_form{{$quiz->id}}').submit()
+                    }else{
+                     event.preventDefault();
+                    } 
+                    ">
+                <input type="submit" value="DELETE" class="btn btn-danger">    
+                </a>
+                        </td>
                         </tr>
                         @endforeach
                         @else
