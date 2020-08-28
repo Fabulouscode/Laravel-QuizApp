@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edmin</title>
+        <title>QuizApp</title>
         <link type="text/css" href="{{asset('asset/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
         <link type="text/css" href="{{asset('asset/bootstrap/css/bootstrap-responsive.min.css')}}" rel="stylesheet">
         <link type="text/css" href="{{asset('asset/css/theme.css')}}" rel="stylesheet">
@@ -17,7 +17,7 @@
             <div class="navbar-inner">
                 <div class="container">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
-                        <i class="icon-reorder shaded"></i></a><a class="brand" href="index.html">Edmin </a>
+                    <i class="icon-reorder shaded"></i></a><a class="brand" href="{{url('/')}}">QuizApp </a>
                     <div class="nav-collapse collapse navbar-inverse-collapse">
                         <ul class="nav nav-icons">
                             <li class="active"><a href="#"><i class="icon-envelope"></i></a></li>

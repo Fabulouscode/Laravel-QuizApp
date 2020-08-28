@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Quiz;
+use App\Answer;
+use App\Question;
 use Illuminate\Http\Request;
 
-class QuizController extends Controller
+class QuestionController extends Controller
 {
+    private $limit = 12;
+    private $order = 'DESC';
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +17,8 @@ class QuizController extends Controller
      */
     public function index()
     {
-        $quizzes = Quiz::all();
-        return view('quiz.index', compact('quizzes'));
+        $questions = Question::orderBy('created_at', $this->order)->with('quiz')->paginate($this->limit);
+        return view('Question.index', compact('questions'));
     }
 
     /**
@@ -25,7 +28,7 @@ class QuizController extends Controller
      */
     public function create()
     {
-        return view('quiz.create');
+        return view('question.create');
     }
 
     /**
@@ -37,8 +40,21 @@ class QuizController extends Controller
     public function store(Request $request)
     {
         $data = $this->validateForm($request);
-        $quiz = (new Quiz)->storeQuiz($data);
-        return redirect()->route('quiz.index')->with('message', 'Quiz created succefully');
+        $question = Question::create($data);
+        foreach($data['options'] as $key=>$option){
+         $is_correct = false;
+         if($key == $data['correct_answer']){
+             $is_correct = true;
+         }
+         $answer = Answer::create([
+             'question_id' => $question->id,
+             'answer' => $option,
+             'is_correct' => $is_correct
+         ]);
+        }
+
+        return redirect()->route('question.index')->with('message', 'Question created successfully');
+
     }
 
     /**
@@ -60,8 +76,7 @@ class QuizController extends Controller
      */
     public function edit($id)
     {
-        $quiz = Quiz::find($id);
-        return view('quiz.edit', compact('quiz'));
+        //
     }
 
     /**
@@ -73,10 +88,7 @@ class QuizController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $this->validateForm($request);
-        $quiz = (new Quiz)->updateQuiz($data, $id);
-
-        return redirect()->route('quiz.index')->with('success', 'Quiz updated successfully');
+        //
     }
 
     /**
@@ -87,15 +99,16 @@ class QuizController extends Controller
      */
     public function destroy($id)
     {
-        $delete = Quiz::find($id)->delete();
-        return redirect()->route('quiz.index')->with('success', 'Quiz Deleted successfully');
+        //
     }
 
     public function validateForm($request){
         return $this->validate($request, [
-            'name' => 'required|string',
-            'description' => 'required|min:3|max:200',
-            'minutes' => 'required|integer'
+            'question' => 'required|string',
+            'quiz_id' => 'required|string',
+            'options' => 'bail|required|array',
+            'options.*' => 'bail|required|string|distinct',
+            'correct_answer' => 'required'
         ]);
     }
 }

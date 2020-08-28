@@ -13,9 +13,8 @@ class Quiz extends Model
 
     public function storeQuiz($data){
         return Quiz::create($data);
-
     }
-   
+
     public function getQuizById($id){
         return Quiz::find($id);
     }
