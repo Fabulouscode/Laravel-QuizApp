@@ -9,6 +9,9 @@
             <div class="module-head">
                 <h3>All Question</h3>
             </div>
+            @if(Session::has('message'))
+            <div class="alert alert-success">{{Session::get('message')}}</div>
+            @endif
             <div class="module-body">
                 <table class="table table-striped">
                     <thead>

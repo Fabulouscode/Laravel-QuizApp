@@ -6,13 +6,13 @@
 
 <div class="span9">
     <div class="content">
-        @if(Session::has('message'))
-        <div class="alert alert-success">{{Session::get('message')}}</div>
-        @endif
         <div class="module">
             <div class="module-head">
                 <h3>VIEW ANSWERS</h3>
             </div>
+            @if(Session::has('message'))
+            <div class="alert alert-success">{{Session::get('message')}}</div>
+            @endif
             <div class="module-body">
             <p><h3 class="heading">{{$question->question}}</h3></p>
                 <div class="module-body table">

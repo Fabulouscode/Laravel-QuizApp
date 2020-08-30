@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'create quiz')
+@section('title', 'create question')
 
 @section('content')
 

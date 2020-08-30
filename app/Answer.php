@@ -11,4 +11,10 @@ class Answer extends Model
     public function question(){
         return $this->belongsTo(Question::class);
     }
+
+    public function deleteAnswer($questionId)
+    {
+       Answer::where('queston_idi', $questionId)->delete();
+    }
+
 }

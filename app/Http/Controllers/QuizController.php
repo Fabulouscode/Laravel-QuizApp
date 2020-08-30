@@ -37,7 +37,7 @@ class QuizController extends Controller
     public function store(Request $request)
     {
         $data = $this->validateForm($request);
-        $quiz = (new Quiz)->storeQuiz($data);
+        $quiz = Quiz::create($data);
         return redirect()->route('quiz.index')->with('message', 'Quiz created succefully');
     }
 
@@ -74,9 +74,9 @@ class QuizController extends Controller
     public function update(Request $request, $id)
     {
         $data = $this->validateForm($request);
-        $quiz = (new Quiz)->updateQuiz($data, $id);
+        $quiz = Quiz::find($id)->update($data);
 
-        return redirect()->route('quiz.index')->with('success', 'Quiz updated successfully');
+        return redirect()->route('quiz.index')->with('message', 'Quiz updated successfully');
     }
 
     /**

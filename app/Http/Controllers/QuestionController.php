@@ -77,7 +77,8 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $question = Question::find($id);
+        return view('question.edit', compact('question'));
     }
 
     /**
@@ -89,7 +90,27 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $data = $this->validateForm($request);
+
+        $question = Question::find($id);
+        $question->question = $data['question'];
+        $question->quiz_id = $data['quiz_id'];
+        $question->update();
+
+          $this->deleteAnswer($question->id);
+
+        foreach($data['options'] as $key=>$option){
+            $is_correct = false;
+            if($key == $data['correct_answer']){
+                $is_correct = true;
+            }
+            $answer = Answer::create([
+                'question_id' => $question->id,
+                'answer' => $option,
+                'is_correct' => $is_correct
+            ]);
+           }
+        return redirect()->route('question.show', $id)->with('message', 'Question updated successfully');
     }
 
     /**
@@ -111,5 +132,10 @@ class QuestionController extends Controller
             'options.*' => 'bail|required|string|distinct',
             'correct_answer' => 'required'
         ]);
+    }
+
+    public function deleteAnswer($questionId)
+    {
+       Answer::where('question_id', $questionId)->delete();
     }
 }
