@@ -1,13 +1,13 @@
 @extends('layouts.master')
 
-@section('title', 'quizzes')
+@section('title', 'Questions')
 
 @section('content')
 <div class="span9">
     <div class="content">
         <div class="module">
             <div class="module-head">
-                <h3>All Quiz</h3>
+                <h3>Show Questions</h3>
             </div>
             @if(Session::has('message'))
             <div class="alert alert-success">{{Session::get('message')}}</div>
@@ -17,33 +17,33 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Quiz Name</th>
-                            <th>Minutes</th>
-                            <th>Description</th>
-                            <th>View Questons</th>
+                            <th>Question</th>
+                            <th>Quiz</th>
+                            <th>Date</th>
+                            <th>View</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @if(count($quizzes) > 0)
-                        @foreach($quizzes as $key=>$quiz)
+                        @if(count($quiz->questions) > 0)
+                        @foreach($quiz->questions as $key=>$question)
                         <tr>
                         <td>{{$key+1}}</td>
-                        <td>{{$quiz->name}}</td>
-                        <td>{{$quiz->minutes}}</td>
-                        <td>{{$quiz->description}}</td>
-                        <td><a href="{{route('quiz.show',[$quiz->id])}}" class="btn btn-primary">View</a></td>
-                        <td><a href="{{route('quiz.edit',[$quiz->id])}}" class="btn btn-primary">Edit</a></td>
+                        <td>{{$question->question}}</td>
+                        <td>{{$question->quiz->name}}</td>
+                        <td>{{date('F d, Y', strtotime($question->created_at))}}</td>
+                        <td><a href="{{route('question.show',[$question->id])}}" class="btn btn-primary">View</a></td>
+                        <td><a href="{{route('question.edit',[$question->id])}}" class="btn btn-primary">Edit</a></td>
                         <td>
-                        <form id="delete_form{{$quiz->id}}" method="POST" action="{{route('quiz.destroy', [$quiz->id])}}">@csrf
+                        <form id="delete_form{{$question->id}}" method="POST" action="{{route('question.destroy', [$question->id])}}">@csrf
                         {{method_field('DELETE')}}
 
                         </form>
                     <a href="#" onclick="if(confirm('Do you want to delete?')){
                         event.preventDefault();
-                    document.getElementById('delete_form{{$quiz->id}}').submit()
+                    document.getElementById('delete_form{{$question->id}}').submit()
                     }else{
                      event.preventDefault();
                     }
@@ -54,10 +54,13 @@
                         </tr>
                         @endforeach
                         @else
-                        <td>No Quiz to display</td>
+                        <td colspan="7" style="text-align: center">No Question to display</td>
                         @endif
                     </tbody>
                 </table>
+                <div class="pagination pagination-centered">
+                {{-- {{$quiz->links()}} --}}
+                </div>
         </div>
     </div>
 </div>

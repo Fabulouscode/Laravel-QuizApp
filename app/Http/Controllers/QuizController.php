@@ -49,7 +49,8 @@ class QuizController extends Controller
      */
     public function show($id)
     {
-        //
+        $quiz = Quiz::find($id);
+        return view('Quiz.show', compact('quiz'));
     }
 
     /**
