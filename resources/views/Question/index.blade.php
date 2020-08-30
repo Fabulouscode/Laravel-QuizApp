@@ -17,6 +17,7 @@
                             <th>Question</th>
                             <th>Quiz</th>
                             <th>Date</th>
+                            <th>View</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -30,7 +31,7 @@
                         <td>{{$question->question}}</td>
                         <td>{{$question->quiz->name}}</td>
                         <td>{{date('F d, Y', strtotime($question->created_at))}}</td>
-
+                        <td><a href="{{route('question.show',[$question->id])}}" class="btn btn-primary">View</a></td>
                         <td><a href="{{route('question.edit',[$question->id])}}" class="btn btn-primary">Edit</a></td>
                         <td>
                         <form id="delete_form{{$question->id}}" method="POST" action="{{route('question.destroy', [$question->id])}}">@csrf
