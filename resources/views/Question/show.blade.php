@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'create quiz')
+@section('title', 'show question')
 
 @section('content')
 
@@ -32,6 +32,8 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <a href="{{route('question.edit',[$question->id])}}" class="btn btn-info">Edit</a>
+                    <a href="{{route('question.index')}}" class="btn btn-default">Back</a>
                 </div>
             </div>
         </div>

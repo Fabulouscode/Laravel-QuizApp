@@ -121,7 +121,8 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = Question::find($id)->delete();
+        return redirect()->route('question.index')->with('message', 'Question Deleted successfully');
     }
 
     public function validateForm($request){
@@ -138,4 +139,5 @@ class QuestionController extends Controller
     {
        Answer::where('question_id', $questionId)->delete();
     }
+
 }
