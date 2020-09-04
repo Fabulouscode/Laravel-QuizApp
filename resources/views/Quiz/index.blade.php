@@ -21,8 +21,10 @@
                             <th>Minutes</th>
                             <th>Description</th>
                             <th>View Questons</th>
+                            @if(Auth::user()->is_admin == 1)
                             <th>Edit</th>
                             <th>Delete</th>
+                            @endif
                         </tr>
                     </thead>
 
@@ -35,6 +37,7 @@
                         <td>{{$quiz->minutes}}</td>
                         <td>{{$quiz->description}}</td>
                         <td><a href="{{route('quiz.show',[$quiz->id])}}" class="btn btn-primary">View</a></td>
+                        @if(Auth::user()->is_admin == 1)
                         <td><a href="{{route('quiz.edit',[$quiz->id])}}" class="btn btn-primary">Edit</a></td>
                         <td>
                         <form id="delete_form{{$quiz->id}}" method="POST" action="{{route('quiz.destroy', [$quiz->id])}}">@csrf
@@ -51,6 +54,7 @@
                 <input type="submit" value="DELETE" class="btn btn-danger">
                 </a>
                         </td>
+                        @endif
                         </tr>
                         @endforeach
                         @else

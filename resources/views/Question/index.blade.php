@@ -20,9 +20,11 @@
                             <th>Question</th>
                             <th>Quiz</th>
                             <th>Date</th>
-                            <th>View</th>
+                            <th>View Answers</th>
+                            @if(Auth::user()->is_admin == 1)
                             <th>Edit</th>
                             <th>Delete</th>
+                            @endif
                         </tr>
                     </thead>
 
@@ -35,22 +37,24 @@
                         <td>{{$question->quiz->name}}</td>
                         <td>{{date('F d, Y', strtotime($question->created_at))}}</td>
                         <td><a href="{{route('question.show',[$question->id])}}" class="btn btn-primary">View</a></td>
+                        @if(Auth::user()->is_admin == 1)
                         <td><a href="{{route('question.edit',[$question->id])}}" class="btn btn-primary">Edit</a></td>
                         <td>
                         <form id="delete_form{{$question->id}}" method="POST" action="{{route('question.destroy', [$question->id])}}">@csrf
-                        {{method_field('DELETE')}}
+                        @method('DELETE');
 
                         </form>
-                    <a href="#" onclick="if(confirm('Do you want to delete?')){
+                        <a href="#" onclick="if(confirm('Do you want to delete?')){
+                            event.preventDefault();
+                        document.getElementById('delete_form{{$question->id}}').submit()
+                        }else{
                         event.preventDefault();
-                    document.getElementById('delete_form{{$question->id}}').submit()
-                    }else{
-                     event.preventDefault();
-                    }
-                    ">
-                <input type="submit" value="DELETE" class="btn btn-danger">
-                </a>
+                        }
+                        ">
+                    <input type="submit" value="DELETE" class="btn btn-danger">
+                    </a>
                         </td>
+                        @endif
                         </tr>
                         @endforeach
                         @else

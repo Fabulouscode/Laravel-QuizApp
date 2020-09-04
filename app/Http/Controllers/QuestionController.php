@@ -5,6 +5,8 @@ use App\Quiz;
 use App\Answer;
 use App\Question;
 use Illuminate\Http\Request;
+use DB;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -15,10 +17,14 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
+        // \DB::enableQueryLog();
+
         $questions = Question::orderBy('created_at', $this->order)->with('quiz')->paginate($this->limit);
         return view('Question.index', compact('questions'));
+        //  \DB::getQueryLog();
     }
 
     /**
@@ -28,7 +34,10 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('question.create');
+        if(!Auth::user()->is_admin == 1){
+            abort(404, 'Page not found');
+        }
+        return view('Question.create');
     }
 
     /**
@@ -39,6 +48,9 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::user()->is_admin == 1){
+            abort(404, 'Page not found');
+        }
         $data = $this->validateForm($request);
         $question = Question::create($data);
         foreach($data['options'] as $key=>$option){
@@ -77,6 +89,9 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
+        if(!Auth::user()->is_admin == 1){
+            abort(404, 'Page not found');
+        }
         $question = Question::find($id);
         return view('question.edit', compact('question'));
     }
@@ -90,6 +105,9 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->is_admin == 1){
+            abort(404, 'Page not found');
+        }
          $data = $this->validateForm($request);
 
         $question = Question::find($id);
@@ -121,6 +139,9 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
+        if(!Auth::user()->is_admin == 1){
+            abort(404, 'Page not found');
+        }
         $delete = Question::find($id)->delete();
         return redirect()->route('question.index')->with('message', 'Question Deleted successfully');
     }

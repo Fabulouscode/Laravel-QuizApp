@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -16,12 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('admin.index');
+    return view('auth/login');
 });
 
 Auth::routes();
+// Route::resource('quiz', 'QuizController')->except('store', 'create', 'update', 'destrory', 'edit');
+// Route::resource('question', 'QuestionController')->except('store', 'create', 'update', 'destrory', 'edit');
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('quiz', 'QuizController');
+    Route::resource('question', 'QuestionController');
+    //Route::get('question', [QuestionController::class, 'create'])->name('create');
+    Route::resource('user', 'UserController');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::resource('quiz', 'QuizController');
-Route::resource('question', 'QuestionController');

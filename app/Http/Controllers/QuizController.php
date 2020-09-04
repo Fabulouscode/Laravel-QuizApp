@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Quiz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
@@ -25,6 +26,9 @@ class QuizController extends Controller
      */
     public function create()
     {
+        if(!Auth::user()->is_admin == 1){
+            abort(404, 'Page not found');
+        }
         return view('quiz.create');
     }
 
@@ -36,6 +40,9 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::user()->is_admin == 1){
+            abort(404, 'Page not found');
+        }
         $data = $this->validateForm($request);
         $quiz = Quiz::create($data);
         return redirect()->route('quiz.index')->with('message', 'Quiz created succefully');
@@ -61,6 +68,9 @@ class QuizController extends Controller
      */
     public function edit($id)
     {
+        if(!Auth::user()->is_admin == 1){
+            abort(404, 'Page not found');
+        }
         $quiz = Quiz::find($id);
         return view('quiz.edit', compact('quiz'));
     }
@@ -74,6 +84,9 @@ class QuizController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->is_admin == 1){
+            abort(404, 'Page not found');
+        }
         $data = $this->validateForm($request);
         $quiz = Quiz::find($id)->update($data);
 
@@ -88,6 +101,9 @@ class QuizController extends Controller
      */
     public function destroy($id)
     {
+        if(!Auth::user()->is_admin == 1){
+            abort(404, 'Page not found');
+        }
         $delete = Quiz::find($id)->delete();
         return redirect()->route('quiz.index')->with('success', 'Quiz Deleted successfully');
     }

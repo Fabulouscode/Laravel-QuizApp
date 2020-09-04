@@ -10,7 +10,7 @@
         <div class="alert alert-success">{{Session::get('message')}}</div>
         @endif
     <form action="{{route('question.update',[$question->id])}}" method="POST">@csrf
-        {{method_field('PUT')}}
+        @method('PUT');
         <div class="module">
             <div class="module-head">
                 <h3>EdIT QUESTION</h3>

@@ -1,5 +1,10 @@
-@extends('layouts.master')
+@include('layouts.navbar')
+@include('layouts.sidebar')
 
-@section('content')
+@yield('content')
+@include('layouts.dashboard')
 
-@endsection
+@include('layouts.footer')
+
+
+
