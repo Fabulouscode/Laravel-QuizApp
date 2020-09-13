@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('question', 'QuestionController');
     Route::get('exam/assign', 'ExamController@create')->name('exam.assign');
     Route::post('exam/assign', 'ExamController@assign')->name('exam.assignExam');
+    Route::get('exam/user', 'ExamController@userExam')->name('view.exam');
     Route::resource('user', 'UserController');
 });
 

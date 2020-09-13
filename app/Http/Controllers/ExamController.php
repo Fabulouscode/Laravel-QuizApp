@@ -27,6 +27,12 @@ class ExamController extends Controller
 
     }
 
+    public function userExam(Request $request)
+    {
+        $quizzes = Quiz::get();
+        return view('exam.index', compact('quizzes'));
+    }
+
     public function validateForm($request){
         return $this->validate($request, [
             'quiz_id' => 'required',
