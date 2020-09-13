@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Question;
+use App\User;
 class Quiz extends Model
 {
     protected $fillable = ['name', 'description', 'minutes'];
@@ -13,6 +14,11 @@ class Quiz extends Model
 
     public function getQuizById($id){
         return Quiz::find($id);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'quiz_user');
     }
 
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('quiz', 'QuizController');
     Route::resource('question', 'QuestionController');
-    //Route::get('question', [QuestionController::class, 'create'])->name('create');
+    Route::get('exam/assign', 'ExamController@create')->name('exam.assign');
+    Route::post('exam/assign', 'ExamController@assign')->name('exam.assignExam');
     Route::resource('user', 'UserController');
 });
 
