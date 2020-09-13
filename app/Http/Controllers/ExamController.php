@@ -16,9 +16,6 @@ class ExamController extends Controller
 
     public function assign(Request $request)
     {
-        if(!Auth::user()->is_admin == 1){
-            abort(404, 'Page not found');
-        }
         $data = $this->validateForm($request);
         $quizId = $data['quiz_id'];
         $quiz = Quiz::find($quizId);
@@ -35,9 +32,6 @@ class ExamController extends Controller
     }
 
     public function remove(Request $request){
-        if(!Auth::user()->is_admin == 1){
-            abort(404, 'Page not found');
-        }
         $data = $this->validateForm($request);
         $userId = $request->get('user_id');
         $quizId = $request->get('quiz_id');

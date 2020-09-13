@@ -18,14 +18,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth/login');
+    return view('auth.login');
 });
 
 Auth::routes();
-// Route::resource('quiz', 'QuizController')->except('store', 'create', 'update', 'destrory', 'edit');
-// Route::resource('question', 'QuestionController')->except('store', 'create', 'update', 'destrory', 'edit');
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'isAdmin'], function () {
+
     Route::resource('quiz', 'QuizController');
     Route::resource('question', 'QuestionController');
     Route::get('exam/assign', 'ExamController@create')->name('exam.assign');
@@ -33,5 +32,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('exam/user', 'ExamController@userExam')->name('view.exam');
     Route::post('exam/remove', 'ExamController@remove')->name('exam.remove');
     Route::resource('user', 'UserController');
+
 });
 

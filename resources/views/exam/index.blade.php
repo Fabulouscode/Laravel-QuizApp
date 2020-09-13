@@ -31,7 +31,9 @@
                         <td>{{$quiz->name}}</td>
                         <td>{{$user->name}}</td>
                         <td><a href="{{route('quiz.show',[$quiz->id])}}" class="btn btn-primary">View Questions</a></td>
+                        @if(Auth::user()->is_admin == 1)
                         <td>
+
                         <form action="{{route('exam.remove')}}" method="POST">@csrf
 
                             <input type="hidden" name="user_id" value="{{$user->id}}">
@@ -40,6 +42,7 @@
                             </form>
 
                         </td>
+                        @endif                                       
                         </tr>
                         @endforeach
                         @endforeach

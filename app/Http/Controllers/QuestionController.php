@@ -48,9 +48,6 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Auth::user()->is_admin == 1){
-            abort(404, 'Page not found');
-        }
         $data = $this->validateForm($request);
         $question = Question::create($data);
         foreach($data['options'] as $key=>$option){
@@ -89,9 +86,6 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        if(!Auth::user()->is_admin == 1){
-            abort(404, 'Page not found');
-        }
         $question = Question::find($id);
         return view('question.edit', compact('question'));
     }
@@ -105,9 +99,6 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(!Auth::user()->is_admin == 1){
-            abort(404, 'Page not found');
-        }
          $data = $this->validateForm($request);
 
         $question = Question::find($id);
@@ -139,9 +130,6 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        if(!Auth::user()->is_admin == 1){
-            abort(404, 'Page not found');
-        }
         $delete = Question::find($id)->delete();
         return redirect()->route('question.index')->with('message', 'Question Deleted successfully');
     }

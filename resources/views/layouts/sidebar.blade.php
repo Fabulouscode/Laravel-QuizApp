@@ -6,27 +6,27 @@
                             <ul class="widget widget-menu unstyled">
                             <li class="active"><a href="{{url('/home')}}"><i class="menu-icon icon-dashboard"></i>Dashboard
                                 </a></li>
-                            @if(Auth::user()->is_admin == 1)
+
                             <li><a href="{{route('quiz.create')}}"><i class="menu-icon icon-pencil"></i>Create Quiz </a>
                                 </li>
-                                @endif
+
                             <li><a href="{{route('quiz.index')}}"><i class="menu-icon icon-eye-open"></i>View Quiz  </a></li>
 
                             </ul>
                         <ul class="widget widget-menu unstyled">
 
-                            @if(Auth::user()->is_admin == 1)
+
                             <li><a href="{{route('question.create')}}"><i class="menu-icon icon-pencil"></i> Create Question </a></li>
-                            @endif
+
                             <li><a href="{{route('question.index')}}"><i class="menu-icon icon-eye-open"></i>View Question </a></li>
 
 
                         </ul>
                         <ul class="widget widget-menu unstyled">
 
-                            @if(Auth::user()->is_admin == 1)
+
                             <li><a href="{{route('exam.assign')}}"><i class="menu-icon icon-pencil"></i> assign quiz </a></li>
-                            @endif
+
                             <li><a href="{{route('view.exam')}}"><i class="menu-icon icon-eye-open"></i>User assigned quiz </a></li>
 
 

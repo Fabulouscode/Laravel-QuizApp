@@ -21,5 +21,17 @@ class Quiz extends Model
         return $this->belongsToMany(User::class, 'quiz_user');
     }
 
+    public function hasQuizAttempted()
+    {
+        $attemptQuiz = [];
+        $authUser = auth()->user()->id;
+        $user = Result::where('user_id',$authUser)->get();
+        foreach($user as $u){
+            array_push($attemptQuiz, $u->quiz_id);
+        }
+        return  $attemptQuiz;
+
+    }
+
 
 }
