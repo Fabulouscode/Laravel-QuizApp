@@ -30,7 +30,16 @@
                         <td>{{$key+1}}</td>
                         <td>{{$quiz->name}}</td>
                         <td>{{$user->name}}</td>
-                        <td><a href="{{route('quiz.show',[$quiz->id])}}" class="btn btn-primary">View</a></td>
+                        <td><a href="{{route('quiz.show',[$quiz->id])}}" class="btn btn-primary">View Questions</a></td>
+                        <td>
+                        <form action="{{route('exam.remove')}}" method="POST">@csrf
+
+                            <input type="hidden" name="user_id" value="{{$user->id}}">
+                                <input type="hidden" name="quiz_id" value="{{$quiz->id}}">
+                                <button class="btn btn-danger" type="submit">Remove</button>
+                            </form>
+
+                        </td>
                         </tr>
                         @endforeach
                         @endforeach
