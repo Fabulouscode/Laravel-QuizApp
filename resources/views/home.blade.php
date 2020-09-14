@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
@@ -17,7 +18,7 @@
                     <p>Number of Questions: {{$quiz->questions->count()}}</p>
                     <p>
                         @if(!in_array($quiz->id, $wasQuizCompleted))
-                        <a href="">
+                    <a href="/quiz/{{$quiz->id}}">
                            <button class="btn btn-primary"> Start</button>
 
                         </a>

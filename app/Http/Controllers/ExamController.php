@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Question;
 use Illuminate\Http\Request;
 use App\Quiz;
 use App\Result;
@@ -43,6 +44,17 @@ class ExamController extends Controller
             $quiz->users()->detach($userId);
             return   redirect()->back()->with('message', 'Quiz unassigned successfully');
         }
+    }
+
+    public function getQuizQuestions(Request $request, $quizId)
+    {
+        $authUser = auth()->user()->id;
+        $quiz = Quiz::find($quizId);
+        $time = Quiz::where('id', $quizId)->value('minutes');
+        $quizQuestions = Question::where('quiz_id', $quizId)->with('answers')->get();
+        $authUserHasTakenQuiz = Result::where(['user_id'=>$authUser, 'quiz_id'=>$quizId])->get();
+
+        return view('quiz', compact('quiz', 'quizQuestions', 'authUserHasTakenQuiz', 'time'));
     }
 
     public function validateForm($request){
