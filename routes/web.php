@@ -24,6 +24,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('quiz/{quizId}', 'ExamController@getQuizQuestions')->middleware('auth');
+Route::post('quiz/create', 'ExamController@postQuiz')->middleware('auth');
 Route::group(['middleware' => 'isAdmin'], function () {
 
     Route::resource('quiz', 'QuizController');

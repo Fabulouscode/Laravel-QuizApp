@@ -57,6 +57,20 @@ class ExamController extends Controller
         return view('quiz', compact('quiz', 'quizQuestions', 'authUserHasTakenQuiz', 'time'));
     }
 
+    public function postQuiz(Request $request)
+    {
+        $questionId = $request['questionId'];
+        $answerId = $request['answerId'];
+        $quizId = $request['quizId'];
+        $authUser = auth()->user();
+
+       return $userQuestionAnswer = Result::updateOrCreate(
+            ['user_id'=>$authUser->id, 'quiz_id'=>$quizId, 'question_id'=>$questionId],
+            ['answer_id'=>$answerId]
+
+        );
+    }
+
     public function validateForm($request){
         return $this->validate($request, [
             'quiz_id' => 'required',

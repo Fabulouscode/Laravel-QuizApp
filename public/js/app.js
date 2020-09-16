@@ -2015,6 +2015,17 @@ __webpack_require__.r(__webpack_exports__);
       return this.userResponses.filter(function (val) {
         return val === true;
       }).length * 2;
+    },
+    postUserChoice: function postUserChoice() {
+      axios.post('/quiz/create', {
+        answerId: this.currentAnswer,
+        questionId: this.currentQuestion,
+        quizId: this.quiz
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        alert(error);
+      });
     }
   }
 });
@@ -37787,7 +37798,8 @@ var render = function() {
                       staticClass: "btn btn-success float-left",
                       on: {
                         click: function($event) {
-                          return _vm.next()
+                          _vm.next()
+                          _vm.postUserChoice()
                         }
                       }
                     },
